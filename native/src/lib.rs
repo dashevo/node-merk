@@ -133,6 +133,16 @@ declare_types! {
             }
             Ok(buffer.upcast())
         }
+
+        method close(mut cx) {
+            borrow_store!(cx, |store: &Merk| store.close());
+            Ok(cx.undefined().upcast())
+        }
+
+        method destroy(mut cx) {
+            borrow_store!(cx, |store: &Merk| store.destroy());
+            Ok(cx.undefined().upcast())
+        }
     }
 
     pub class JsBatch for Batch {
