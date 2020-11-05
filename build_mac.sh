@@ -2,7 +2,7 @@
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-source /home/$USER/.cargo/env
+source /Users/$USER/.cargo/env
 
 rustup install nightly
 rustup default nightly
