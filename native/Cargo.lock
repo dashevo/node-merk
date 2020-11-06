@@ -384,7 +384,7 @@ dependencies = [
 [[package]]
 name = "librocksdb-sys"
 version = "6.11.4"
-source = "git+https://github.com/jawid-h/rust-rocksdb?branch=close-and-destroy#216ea615696d05048eaf256fad69278dfb317641"
+source = "git+https://github.com/dashevo/rust-rocksdb?branch=close-and-destroy#216ea615696d05048eaf256fad69278dfb317641"
 dependencies = [
  "bindgen",
  "cc",
@@ -419,7 +419,7 @@ dependencies = [
 [[package]]
 name = "merk"
 version = "1.0.0-alpha.5"
-source = "git+https://github.com/jawid-h/merk?branch=close-and-destroy#81463ce95b0b65f7083d68ef259bf955c5c783a3"
+source = "git+https://github.com/dashevo/merk?branch=close-and-destroy#dd5c90680194e2162c06238a54541536691f52e2"
 dependencies = [
  "blake2-rfc",
  "byteorder",
@@ -712,7 +712,7 @@ checksum = "2089e4031214d129e201f8c3c8c2fe97cd7322478a0d1cdf78e7029b0042efdb"
 [[package]]
 name = "rocksdb"
 version = "0.15.0"
-source = "git+https://github.com/jawid-h/rust-rocksdb?branch=close-and-destroy#216ea615696d05048eaf256fad69278dfb317641"
+source = "git+https://github.com/dashevo/rust-rocksdb?branch=close-and-destroy#216ea615696d05048eaf256fad69278dfb317641"
 dependencies = [
  "libc",
  "librocksdb-sys",
