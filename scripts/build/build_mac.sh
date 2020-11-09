@@ -19,4 +19,4 @@ neon build --release
 
 NODE_ABI=$(node -e "console.log(process.config.variables.node_module_version)")
 
-mv ./native/index.node ./prebuilds/node.abi${NODE_ABI}darwin.node
+mv ./native/index.node ./prebuilds/darwin-x64/node.abi${NODE_ABI}darwin.node

@@ -6,4 +6,4 @@ fi
 
 docker run -v $(pwd):/app dashpay/neon-build:musl neon build
 
-mv ./native/index.node ./prebuilds/node.abi72.musl.node
+mv ./native/index.node ./prebuilds/linux-x64/node.abi72.musl.node
