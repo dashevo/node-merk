@@ -6,4 +6,4 @@ fi
 
 docker run -v $(pwd):/app dashpay/neon-build:gnu neon build
 
-mv ./native/index.node ./build/x86_64-unknown-linux-gnu.node
+mv ./native/index.node ./prebuilds/node.abi72.glibc.node
