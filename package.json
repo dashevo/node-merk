@@ -1,6 +1,6 @@
 {
   "name": "@dashevo/merk",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Node.js bindings for Merk",
   "main": "lib/index.js",
   "author": "Matt Bell <mappum@gmail.com>",
@@ -17,7 +17,7 @@
     "build:gnu": "./scripts/build/build_gnu.sh",
     "build:musl": "./scripts/build/build_musl.sh",
     "build:mac": "./scripts/build/build_mac.sh",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
