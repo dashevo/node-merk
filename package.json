@@ -18,7 +18,7 @@
     "build:musl": "./scripts/build/build_musl.sh",
     "build:mac": "./scripts/build/build_mac.sh",
     "prepublishOnly": "npm run build",
-    "postinstall": "cd ./prebuilds/linux-x64 && tar -xvf ./*.tar.gz && rm -rf ./*.tar.gz"
+    "preinstall": "cd ./prebuilds/linux-x64 && tar -xvf ./*.tar.gz && rm -rf ./*.tar.gz"
   },
   "repository": {
     "type": "git",
