@@ -1,17 +1,23 @@
 {
-  "name": "merk",
+  "name": "@dashevo/merk",
   "version": "2.1.1",
   "description": "Node.js bindings for Merk",
   "main": "lib/index.js",
   "author": "Matt Bell <mappum@gmail.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "neon-load-or-build": "^2.2.2"
+  },
   "devDependencies": {
-    "neon-cli": "^0.3.1"
+    "neon-cli": "^0.5.1"
   },
   "scripts": {
-    "install": "./scripts/install.js",
-    "build": "npm i neon-cli && neon build --release"
+    "install": "neon-load-or-build",
+    "build": "npm run build:mac && npm run build:gnu && npm run build:musl",
+    "build:gnu": "./scripts/build/build_gnu.sh",
+    "build:musl": "./scripts/build/build_musl.sh",
+    "build:mac": "./scripts/build/build_mac.sh",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
