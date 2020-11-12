@@ -59,6 +59,28 @@ macro_rules! borrow_store {
     }};
 }
 
+macro_rules! check_if_db_closed {
+    ($cx:ident) => {{
+        let mut is_closed = false;
+        {
+            let this = $cx.this();
+            let guard = $cx.lock();
+            let handle = this.borrow(&guard);
+
+            let _ = match handle.store.lock() {
+                Err(_) => panic!("failed to acquire lock"),
+                Ok(store) => {
+                    is_closed = store.db.is_closed;
+                }
+            };
+        }
+
+        if is_closed {
+            return $cx.throw_error("attempting to use DB that is already closed")
+        }
+    }};
+}
+
 declare_types! {
     pub class JsMerk for MerkHandle {
         init(mut cx) {
@@ -73,6 +95,8 @@ declare_types! {
         }
 
         method getSync(mut cx) {
+            check_if_db_closed!(cx);
+
             let key = buffer_arg_to_vec!(cx, 0);
 
             let value = borrow_store!(cx, |store: &Merk| {
@@ -88,6 +112,8 @@ declare_types! {
         }
 
         method rootHash(mut cx) {
+            check_if_db_closed!(cx);
+
             let hash = borrow_store!(cx, |store: &Merk| -> Result<[u8; 20]> {
                 Ok(store.root_hash())
             });
@@ -101,16 +127,22 @@ declare_types! {
         }
 
         method batch(mut cx) {
+            check_if_db_closed!(cx);
+
             let args: Vec<Handle<JsMerk>> = vec![ cx.this() ];
             Ok(JsBatch::new(&mut cx, args)?.upcast())
         }
 
         method flushSync(mut cx) {
+            check_if_db_closed!(cx);
+
             borrow_store!(cx, |store: &Merk| store.flush());
             Ok(cx.undefined().upcast())
         }
 
         method proveSync(mut cx) {
+            check_if_db_closed!(cx);
+
             let upcasted_query = cx.argument::<JsArray>(0)?.to_vec(&mut cx)?;
             let mut query = Vec::with_capacity(upcasted_query.len());
             for value in upcasted_query {
@@ -135,7 +167,9 @@ declare_types! {
         }
 
         method close(mut cx) {
-            borrow_store!(cx, |store: &Merk| store.close());
+            check_if_db_closed!(cx);
+
+            borrow_store!(cx, |store: &mut Merk| store.close());
             Ok(cx.undefined().upcast())
         }
 
