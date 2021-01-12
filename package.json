@@ -13,9 +13,10 @@
   },
   "scripts": {
     "install": "neon-load-or-build",
-    "build": "npm run build:mac && npm run build:gnu && npm run build:musl",
-    "build:gnu": "./scripts/build/build_gnu.sh",
+    "build": "npm run build:mac && npm run build:linux",
+    "build:glibc": "./scripts/build/build_glibc.sh",
     "build:musl": "./scripts/build/build_musl.sh",
+    "build:linux": "./scripts/build/build_linux.sh",
     "build:mac": "./scripts/build/build_mac.sh",
     "prepublishOnly": "npm run build"
   },

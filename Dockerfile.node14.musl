@@ -1,0 +1,15 @@
+FROM node:14-alpine
+
+RUN apk add --no-cache --virtual .gyp python make g++ curl llvm clang linux-headers
+
+WORKDIR /app
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+ENV PATH=/root/.cargo/bin:$PATH
+ENV RUSTFLAGS="-C target-feature=-crt-static"
+
+RUN rustup install nightly
+RUN rustup default nightly
+
+RUN npm i -g neon-cli

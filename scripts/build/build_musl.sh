@@ -1,9 +1,7 @@
 #!/bin/bash
 
-if [[ "$(docker images -q dashpay/neon-build:musl 2> /dev/null)" == "" ]]; then
-  docker build -f Dockerfile.musl . -t dashpay/neon-build:musl
-fi
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-docker run -v $(pwd):/app dashpay/neon-build:musl neon build --release
+. ${SCRIPT_DIR}/build_linux.sh --source-only
 
-mv ./native/index.node ./prebuilds/linux-x64/node.abi72.musl.node
+build "musl"
