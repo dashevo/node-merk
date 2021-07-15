@@ -15,5 +15,5 @@ neon-build = "0.5.1"
 
 [dependencies]
 neon = "0.5.1"
-merk = { git = "https://github.com/dashevo/merk", branch = "close-and-destroy" }
+merk = { git = "https://github.com/dashevo/merk", branch = "no-simd" }
 error-chain = "0.12.1"
