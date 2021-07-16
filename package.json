@@ -9,7 +9,7 @@
     "neon-load-or-build": "^2.2.2"
   },
   "devDependencies": {
-    "neon-cli": "^0.5.1"
+    "neon-cli": "^0.8.3"
   },
   "scripts": {
     "install": "neon-load-or-build",
