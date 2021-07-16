@@ -11,9 +11,9 @@ name = "node_merk"
 crate-type = ["cdylib"]
 
 [build-dependencies]
-neon-build = "0.5.1"
+neon-build = "0.8.3"
 
 [dependencies]
-neon = "0.5.1"
+neon = "0.8.3"
 merk = { git = "https://github.com/dashevo/merk", branch = "no-simd" }
 error-chain = "0.12.1"
