@@ -1,6 +1,6 @@
 FROM node:16-alpine
 
-RUN apk add --no-cache --virtual .gyp python make g++ curl llvm clang linux-headers
+RUN apk add --no-cache --virtual .gyp python3 make g++ curl llvm clang linux-headers
 
 WORKDIR /app
 
