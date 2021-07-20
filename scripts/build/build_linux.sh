@@ -2,7 +2,7 @@
 
 build() {
     buildType=$1
-    nodeVersionsWithABI=("12;72" "14;83")
+    nodeVersionsWithABI=("12;72" "14;83" "16;93")
 
     for nodeVersionWithABIString in ${nodeVersionsWithABI[@]}; do
         IFS=";" read -r -a nodeVersionWithABI <<< "${nodeVersionWithABIString}"
