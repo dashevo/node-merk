@@ -11,12 +11,19 @@ build() {
         abiVersion=${nodeVersionWithABI[1]}
 
         if [[ "$(docker images -q dashpay/neon-build:node${nodeVersion}-${buildType} 2> /dev/null)" == "" ]]; then
-            docker build -f Dockerfile.node${nodeVersion}.${buildType} . -t dashpay/neon-build:node${nodeVersion}-${buildType}
+            docker build --load -f Dockerfile.node${nodeVersion}.${buildType} . -t dashpay/neon-build:node${nodeVersion}-${buildType}
         fi
 
         docker run -v $(pwd):/app dashpay/neon-build:node${nodeVersion}-${buildType} neon build --release
 
-        mv ./native/index.node ./prebuilds/linux-x64/node.abi${abiVersion}.${buildType}.node
+        if [[ "$(uname -m)" == "x86_64" ]]; then
+            mv ./native/index.node ./prebuilds/linux-x64/node.abi${abiVersion}.${buildType}.node
+        elif [[ "$(uname -m)" == "aarch64" ]]; then
+            mv ./native/index.node ./prebuilds/linux-aarch64/node.abi${abiVersion}.${buildType}.node
+        else
+            echo "Unrecognized architecture! Build artifact was not copied to 'prebuilds' directory."
+        fi
+
     done
 }
 
