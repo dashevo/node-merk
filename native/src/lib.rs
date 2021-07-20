@@ -55,28 +55,6 @@ macro_rules! borrow_store {
     }};
 }
 
-macro_rules! check_if_db_closed {
-    ($cx:ident) => {{
-        let mut is_closed = false;
-        {
-            let this = $cx.this();
-            let guard = $cx.lock();
-            let handle = this.borrow(&guard);
-
-            let _ = match handle.store.lock() {
-                Err(_) => panic!("failed to acquire lock"),
-                Ok(store) => {
-                    is_closed = store.db.is_closed;
-                }
-            };
-        }
-
-        if is_closed {
-            return $cx.throw_error("attempting to use DB that is already closed")
-        }
-    }};
-}
-
 declare_types! {
     pub class JsMerk for MerkHandle {
         init(mut cx) {
@@ -92,8 +70,6 @@ declare_types! {
         }
 
         method getSync(mut cx) {
-            check_if_db_closed!(cx);
-
             let key = buffer_arg_to_vec!(cx, 0);
             let value = borrow_store!(cx, |store: &Merk| {
                 store.get(key.as_slice())
@@ -133,13 +109,7 @@ declare_types! {
         }
 
         method rootHash(mut cx) {
-<<<<<<< HEAD
-            check_if_db_closed!(cx);
-
-            let hash = borrow_store!(cx, |store: &Merk| -> Result<[u8; 20]> {
-=======
             let hash = borrow_store!(cx, |store: &Merk| -> Result<[u8; 32], failure::Error> {
->>>>>>> 49e10327d222cdbc89a8c50063b8ecba6121f08f
                 Ok(store.root_hash())
             });
 
@@ -152,20 +122,12 @@ declare_types! {
         }
 
         method batch(mut cx) {
-            check_if_db_closed!(cx);
-
             let args: Vec<Handle<JsMerk>> = vec![ cx.this() ];
             Ok(JsBatch::new(&mut cx, args)?.upcast())
         }
 
         method flushSync(mut cx) {
-<<<<<<< HEAD
-            check_if_db_closed!(cx);
-
-            borrow_store!(cx, |store: &Merk| store.flush());
-=======
             borrow_store!(cx, |store: &mut Merk| store.flush());
->>>>>>> 49e10327d222cdbc89a8c50063b8ecba6121f08f
             Ok(cx.undefined().upcast())
         }
 
@@ -201,8 +163,6 @@ declare_types! {
         }
 
         method proveSync(mut cx) {
-            check_if_db_closed!(cx);
-
             let upcasted_query = cx.argument::<JsArray>(0)?.to_vec(&mut cx)?;
             // let mut query = Vec::with_capacity(upcasted_query.len());
             let mut query = Query::new();
@@ -229,19 +189,6 @@ declare_types! {
             Ok(buffer.upcast())
         }
 
-<<<<<<< HEAD
-        method close(mut cx) {
-            check_if_db_closed!(cx);
-
-            borrow_store!(cx, |store: &mut Merk| store.close());
-            Ok(cx.undefined().upcast())
-        }
-
-        method destroy(mut cx) {
-            borrow_store!(cx, |store: &Merk| store.destroy());
-            Ok(cx.undefined().upcast())
-        }
-=======
         method checkpointSync(mut cx) {
             let path = cx.argument::<JsString>(0)?;
             borrow_store!(cx, |store: &Merk|{
@@ -252,7 +199,6 @@ declare_types! {
         }
 
 
->>>>>>> 49e10327d222cdbc89a8c50063b8ecba6121f08f
     }
 
 
