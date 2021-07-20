@@ -19,7 +19,7 @@ build() {
         if [[ "$(uname -m)" == "x86_64" ]]; then
             mv ./native/index.node ./prebuilds/linux-x64/node.abi${abiVersion}.${buildType}.node
         elif [[ "$(uname -m)" == "aarch64" ]]; then
-            mv ./native/index.node ./prebuilds/linux-aarch64/node.abi${abiVersion}.${buildType}.node
+            mv ./native/index.node ./prebuilds/linux-arm64/node.abi${abiVersion}.${buildType}.node
         else
             echo "Unrecognized architecture! Build artifact was not copied to 'prebuilds' directory."
         fi
