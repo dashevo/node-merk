@@ -11,7 +11,7 @@ build() {
         abiVersion=${nodeVersionWithABI[1]}
 
         if [[ "$(docker images -q dashpay/neon-build:node${nodeVersion}-${buildType} 2> /dev/null)" == "" ]]; then
-            docker build --load -f Dockerfile.node${nodeVersion}.${buildType} . -t dashpay/neon-build:node${nodeVersion}-${buildType}
+            docker buildx build --load -f Dockerfile.node${nodeVersion}.${buildType} . -t dashpay/neon-build:node${nodeVersion}-${buildType}
         fi
 
         docker run -v $(pwd):/app dashpay/neon-build:node${nodeVersion}-${buildType} neon build --release
