@@ -1,7 +1,7 @@
 FROM node:12-buster
 
 RUN apt update
-RUN apt install -y python make cmake g++ curl llvm clang linux-headers-amd64
+RUN apt install -y python make cmake g++ curl llvm clang
 
 WORKDIR /app
 
